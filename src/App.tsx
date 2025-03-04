@@ -23,6 +23,10 @@ const App: React.FC = () => {
   const [cakeCut, setCakeCut] = useState(false);
   const [finalMessage, setFinalMessage] = useState('');
   const [fade, setFade] = useState(true);
+  const [onCandlesBlownOut, setCandlesBlownOut] = useState(false);
+  const [showFinalButton, setShowFinalButton] = useState(false);
+
+
 
   const quirkyMessages = [
     "Hmm, why so shy?",
@@ -43,7 +47,7 @@ const App: React.FC = () => {
       const timer = setTimeout(() => {
         setDisplayedText((prev) => prev + currentMessage[charIndex]);
         setCharIndex((prev) => prev + 1);
-      }, 80); // Typing speed
+      }, 110); // Typing speed
 
       return () => clearTimeout(timer);
     } else {
@@ -136,7 +140,7 @@ const App: React.FC = () => {
           {step === 1 && <button className="action-button" onClick={handleDecorate}>Decorate</button>}
           {step === 2 && <button className="action-button" onClick={handleFlyBalloons}>Fly the Balloons</button>}
           {step === 3 && <button className="action-button" onClick={handleCutCake}>Let's Cut the Cake</button>}
-          {step === 4 && <button className="action-button" onClick={handleFinalMessage}>I Have a Message for You</button>}
+          {step === 4 && onCandlesBlownOut && showFinalButton &&<button className="action-button" onClick={handleFinalMessage}>I Have a Message for You</button>}
         </div>
       )}
 
@@ -156,13 +160,20 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {cakeCut && (
-        <div className="cake">
-          {cakeCut && <CandleWithMicrophone key={cakeCut.toString()} />}
-        </div>
-      )}
+{cakeCut && (
+  <CandleWithMicrophone 
+    onCandlesBlownOut={() => {
+      setCandlesBlownOut(true);
+      // Hide the cake 1.5 seconds after the candles are blown out
+      setTimeout(() => {
+        setCakeCut(false);
+        setShowFinalButton(true);
+      }, 1500);
+    }}
+  />
+)}
 
-      {finalMessage && stage === 4 && step >= 4 && (
+      {finalMessage && stage === 4 && step>= 4 && (
         <div className="final-message">
           <h1>{finalMessage}</h1>
         </div>

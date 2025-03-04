@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "./CandleWithMicrophone.css"; // Ensure styles are correctly updated
-import cake from "/cake001.svg"
+import "./CandleWithMicrophone.css";
+import cake from "/cake001.svg";
 
-const CandleWithMicrophone: React.FC = () => {
+interface CandleWithMicrophoneProps {
+  onCandlesBlownOut?: () => void;
+}
+
+const CandleWithMicrophone: React.FC<CandleWithMicrophoneProps> = ({ onCandlesBlownOut }) => {
     const [flamesVisible, setFlamesVisible] = useState(true);
 
     useEffect(() => {
@@ -23,6 +27,8 @@ const CandleWithMicrophone: React.FC = () => {
 
                     if (volume > 30) { // Adjust sensitivity if needed
                         setFlamesVisible(false);
+                        // Call the callback to notify the parent that candles are blown out
+                        if (onCandlesBlownOut) onCandlesBlownOut();
                         stream.getTracks().forEach((track) => track.stop());
                     } else {
                         requestAnimationFrame(detectBlow);
@@ -36,20 +42,20 @@ const CandleWithMicrophone: React.FC = () => {
         };
 
         startListening();
-    }, []);
+    }, [onCandlesBlownOut]);
 
     return (
         <div className="cake-container">
-            {/* 🎂 External Cake Image */}
+            {/* External Cake Image */}
             <img src={cake} alt="Cake" className="cake-image" />
 
-            {/* 🕯️ Candles with Flames */}
+            {/* Candles */}
             {[75, 115, 155].map((x, index) => (
                 <div key={index} className="candle" style={{ left: `${x}px` }}>
                     <div className="candle-body"></div>
                     <div className="candle-detail"></div>
                     
-                    {/* 🔥 Animated Flame */}
+                    {/* Animated Flame */}
                     {flamesVisible && (
                         <div className="flame">
                             <div className="flame-inner"></div>
