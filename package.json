@@ -1,6 +1,7 @@
 {
   "name": "birthday-wish",
   "private": true,
+  "homepage": "https://swayamjain.github.io/birthday-wish",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
