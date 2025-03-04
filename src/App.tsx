@@ -45,8 +45,11 @@ const App: React.FC = () => {
 
   // Typewriter effect for first two messages
   useEffect(() => {
+    if (stage !== 1 && stage !== 2) { // Only run if stage is 1 or 2
+      return;
+    }
     if (messageIndex >= messages.length) {
-      setStage(2); // Move to Yes/No stage
+      setStage(3); // Move to Yes/No stage
       return;
     }
 
@@ -67,13 +70,13 @@ const App: React.FC = () => {
         setMessageIndex((prev) => prev + 1);
       }, 1500); // Pause before switching messages
     }
-  }, [charIndex, messageIndex]);
+  }, [charIndex, messageIndex, stage]);
 
   // Stage 2: Yes/No Button Handlers
   const handleYes = () => {
     typingAudio.pause();
     setFade(true);
-    setStage(3);
+    setStage(1);
   };
 
   const handleNo = () => {
@@ -108,15 +111,8 @@ const App: React.FC = () => {
 
   return (
     <div className={`app-container ${lightsOn ? 'lights-on' : ''}`}>
-      {/* Stage 0 & 1: Typewriter Messages */}
-      {(stage === 0 || stage === 1) && (
-        <div className="message">
-          <h1>{displayedText}</h1>
-        </div>
-      )}
-
       {/* Stage 2: Yes/No Buttons */}
-      {stage === 2 && (
+      {stage === 0 && (
         <div className="question-container">
           <h1>Do you wanna see what I made ??</h1>
           <div className="button-group">
@@ -134,6 +130,13 @@ const App: React.FC = () => {
               {quirkyMessages[(noClickCount - 1) % quirkyMessages.length]}
             </p>
           )}
+        </div>
+      )}
+
+      {/* Stage 0 & 1: Typewriter Messages */}
+      {(stage === 1 || stage === 2) && (
+        <div className="message">
+          <h1>{displayedText}</h1>
         </div>
       )}
 
