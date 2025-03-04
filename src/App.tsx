@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ReactConfetti from 'react-confetti';
 import CandleWithMicrophone from './components/CandleWithMicrophone';
 import './App.css';
+import typingSound from '/typewriter.mp3';
 
 const messages = [
   "It's your special day",
-  "I wanted to make something special for you because you are special to me"
+  "I wanted to make something special for you"
 ];
 
 const App: React.FC = () => {
+  const typingAudio = new Audio(typingSound);
   const [displayedText, setDisplayedText] = useState("");
   const [messageIndex, setMessageIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -34,6 +36,13 @@ const App: React.FC = () => {
     "I promise you'll love it!"
   ];
 
+
+  const playTypingSound = () => {
+    typingAudio.currentTime = 0;
+    typingAudio.play();
+  };
+
+
   // Typewriter effect for first two messages
   useEffect(() => {
     if (messageIndex >= messages.length) {
@@ -47,7 +56,8 @@ const App: React.FC = () => {
       const timer = setTimeout(() => {
         setDisplayedText((prev) => prev + currentMessage[charIndex]);
         setCharIndex((prev) => prev + 1);
-      }, 110); // Typing speed
+        playTypingSound();
+      }, 85); // Typing speed
 
       return () => clearTimeout(timer);
     } else {
@@ -61,11 +71,13 @@ const App: React.FC = () => {
 
   // Stage 2: Yes/No Button Handlers
   const handleYes = () => {
+    typingAudio.pause();
     setFade(true);
     setStage(3);
   };
 
   const handleNo = () => {
+    typingAudio.pause();
     setNoClickCount(prevCount => prevCount + 1);
 
     if (noClickCount >= 0) {
