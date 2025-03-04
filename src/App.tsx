@@ -140,7 +140,7 @@ const App: React.FC = () => {
           {step === 1 && <button className="action-button" onClick={handleDecorate}>Decorate</button>}
           {step === 2 && <button className="action-button" onClick={handleFlyBalloons}>Fly the Balloons</button>}
           {step === 3 && <button className="action-button" onClick={handleCutCake}>Let's Cut the Cake</button>}
-          {step === 4 && onCandlesBlownOut && showFinalButton &&<button className="action-button" onClick={handleFinalMessage}>I Have a Message for You</button>}
+          {step === 4 && onCandlesBlownOut && showFinalButton && <button className="action-button" onClick={handleFinalMessage}>I Have a Message for You</button>}
         </div>
       )}
 
@@ -160,20 +160,20 @@ const App: React.FC = () => {
         </div>
       )}
 
-{cakeCut && (
-  <CandleWithMicrophone 
-    onCandlesBlownOut={() => {
-      setCandlesBlownOut(true);
-      // Hide the cake 1.5 seconds after the candles are blown out
-      setTimeout(() => {
-        setCakeCut(false);
-        setShowFinalButton(true);
-      }, 1500);
-    }}
-  />
-)}
+      {cakeCut && (
+        <CandleWithMicrophone
+          onCandlesBlownOut={() => {
+            setCandlesBlownOut(true);
+            // Hide the cake 1.5 seconds after the candles are blown out
+            setTimeout(() => {
+              setCakeCut(false);
+              setShowFinalButton(true);
+            }, 1500);
+          }}
+        />
+      )}
 
-      {finalMessage && stage === 4 && step>= 4 && (
+      {finalMessage && stage === 4 && step >= 4 && (
         <div className="final-message">
           <h1>{finalMessage}</h1>
         </div>
