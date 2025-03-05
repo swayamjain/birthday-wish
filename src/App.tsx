@@ -118,13 +118,13 @@ const App: React.FC = () => {
         <div className="question-container">
           <h1>Do you wanna see what I made ??</h1>
           <div className="button-group">
-            <button className="yes-button" onClick={handleYes}>Yes</button>
+            <button className="yes-button" onClick={handleYes}>Yes!!!</button>
             <button
               className={`no-button ${noClickCount > 0 ? 'absolute' : ''}`}
               onClick={handleNo}
               style={noClickCount > 0 ? noButtonStyle : {}}
             >
-              No
+              Rehne dete hai
             </button>
           </div>
           {noClickCount > 0 && (
