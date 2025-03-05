@@ -3,6 +3,7 @@ import ReactConfetti from 'react-confetti';
 import CandleWithMicrophone from './components/CandleWithMicrophone';
 import './App.css';
 import typingSound from '/typewriter.mp3';
+import themeSong from '/music002.mp3'
 
 const messages = [
   "It's your special day",
@@ -106,6 +107,7 @@ const App: React.FC = () => {
   const handleFlyBalloons = () => { setBalloons(true); handleStep(); };
   const handleCutCake = () => { setCakeCut(true); handleStep(); };
   const handleFinalMessage = () => {
+    setShowFinalButton(false);
     setFinalMessage("Happy Birthday! Wishing you a day filled with joy, laughter, and endless love. Thank you for being so special!");
   };
 
@@ -160,20 +162,39 @@ const App: React.FC = () => {
       )}
 
       {musicPlayed && (
-        <audio id="bg-music" src="https://www.bensound.com/bensound-music/bensound-dubstep.mp3" autoPlay loop />
+        <audio id="bg-music" src={themeSong} autoPlay loop />
       )}
 
       {decorated && (
         <ReactConfetti width={window.innerWidth} height={window.innerHeight} />
       )}
 
-      {balloons && (
-        <div className="balloons">
-          <div className="balloon" style={{ animationDelay: '0s' }}>🎈</div>
-          <div className="balloon" style={{ animationDelay: '0.5s' }}>🎈</div>
-          <div className="balloon" style={{ animationDelay: '1s' }}>🎈</div>
+{balloons && (
+  <div className="balloons-container">
+    {Array.from({ length: 10 }).map((_, index) => {
+      const randomLeft = Math.random() * 100; // Random horizontal position
+      const randomSize = Math.random() * 20 + 30; // Random size between 30px and 50px
+      const randomDelay = Math.random() * 5; // Random animation delay
+
+      return (
+        <div
+          key={index}
+          className="balloon"
+          style={{
+            left: `${randomLeft}%`,
+            width: `${randomSize}px`,
+            height: `${randomSize * 1.2}px`,
+            animationDelay: `${randomDelay}s`,
+          }}
+        >
+          🎈
         </div>
-      )}
+      );
+    })}
+  </div>
+)}
+
+
 
       {cakeCut && (
         <CandleWithMicrophone
