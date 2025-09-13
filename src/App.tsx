@@ -108,7 +108,7 @@ const App: React.FC = () => {
   const handleCutCake = () => { setCakeCut(true); handleStep(); };
   const handleFinalMessage = () => {
     setShowFinalButton(false);
-    setFinalMessage("Happy Birthday! Wishing you a day filled with joy, laughter, and endless love. Thank you for being so special!");
+    setFinalMessage("Today’s your day, so bright, so true,The world feels lighter just with you.Strong and smart, you’ve grown each way,Keep shining brighter every day.✨🎉 Happy Birthday, Aakankshya! 🎂🥳");
   };
 
   return (
